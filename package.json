@@ -1,0 +1,43 @@
+{
+  "name": "launchpad_finishline",
+  "version": "1.0.0",
+  "description": "Code for the Finishline Launchpad Project",
+  "main": "index.ts",
+  "private": true,
+  "workspaces": [
+    "src/backend",
+    "src/shared",
+    "src/frontend"
+  ],
+  "scripts": {
+    "prisma:reset": "cd src/backend && npx prisma migrate reset",
+    "prisma:generate": "cd src/backend && npx prisma generate",
+    "prisma:seed": "cd src/backend; npx prisma db seed",
+    "prisma:migrate": "yarn prisma:migrate:dev",
+    "prisma:migrate:dev": "cd src/backend; npx prisma migrate dev",
+    "database:setup": "yarn database:setup:script && docker run --name launchpad -e POSTGRES_PASSWORD=docker -p 8000:5432 -d postgres && sleep 5 && docker exec launchpad psql -U postgres -c \"CREATE DATABASE nerpm;\" && yarn prisma:reset",
+    "database:setup:script": "node scripts/database-setup.js",
+    "start": "yarn workspace shared build; concurrently --kill-others-on-fail \"yarn backend:dev\" \"yarn frontend:dev\"",
+    "backend:dev": "yarn workspace backend dev",
+    "frontend:dev": "yarn workspace frontend dev",
+    "test:setup": "node scripts/test-setup.js && docker run --name launchpad_test -e POSTGRES_PASSWORD=docker -p 8001:5432 -d postgres && sleep 5 && docker exec launchpad_test psql -U postgres -c \"CREATE DATABASE nerpm;\" && yarn prisma:migrate",
+    "test:teardown": "docker stop launchpad_test && docker rm launchpad_test && node scripts/test-teardown.js",
+    "test:backend": "yarn workspace shared build; yarn workspace backend test",
+    "test": "yarn test:backend && yarn test:frontend"
+  },
+  "author": "Northeastern Electric Racing",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "transform": {
+      "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!variables/.*)"
+    ]
+  }
+}
