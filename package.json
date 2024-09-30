@@ -12,9 +12,9 @@
   "scripts": {
     "prisma:reset": "cd src/backend && npx prisma migrate reset",
     "prisma:generate": "cd src/backend && npx prisma generate",
-    "prisma:seed": "cd src/backend; npx prisma db seed",
+    "prisma:seed": "cd src/backend && npx prisma db seed",
     "prisma:migrate": "yarn prisma:migrate:dev",
-    "prisma:migrate:dev": "cd src/backend; npx prisma migrate dev",
+    "prisma:migrate:dev": "cd src/backend && npx prisma migrate dev",
     "database:setup": "yarn database:setup:script && docker run --name launchpad -e POSTGRES_PASSWORD=docker -p 8000:5432 -d postgres && sleep 5 && docker exec launchpad psql -U postgres -c \"CREATE DATABASE nerpm;\" && yarn prisma:reset",
     "database:setup:script": "node scripts/database-setup.js",
     "start": "yarn workspace shared build; concurrently --kill-others-on-fail \"yarn backend:dev\" \"yarn frontend:dev\"",
