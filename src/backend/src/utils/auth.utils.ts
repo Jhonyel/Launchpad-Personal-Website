@@ -1,15 +1,14 @@
-import { User } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../prisma/prisma";
 import { NotFoundException } from "./error.utils";
-
+import { user } from "@prisma/client";
 /**
  * get the user making the request.
  * @param res - we use the response because that's where we stored the userId data during jwt validation
  * @returns the user
  * @throws if no user with the userId exists
  */
-export const getCurrentUser = async (res: Response): Promise<User> => {
+export const getCurrentUser = async (res: Response): Promise<user> => {
   const { userId } = res.locals;
 
   const user = await prisma.user.findUnique({ where: { id: userId } });

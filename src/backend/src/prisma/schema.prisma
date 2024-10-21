@@ -23,9 +23,9 @@ model Project {
   dateCreated   DateTime  @default(now())
   dateDeleted   DateTime?
   userCreatedId String
-  userCreated   user      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
+  userCreated   User      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
   userDeletedId String?
-  userDeleted   user?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
+  userDeleted   User?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
 }
 
 enum Role {
@@ -33,7 +33,7 @@ enum Role {
   GUEST
 }
 
-model user {
+model User {
   id           String @id @default(uuid())
   username     String
   email        String
@@ -62,7 +62,7 @@ model Experience {
   dateCreated   DateTime  @default(now())
   dateDeleted   DateTime?
   userCreatedId String
-  userCreated   user      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
+  userCreated   User      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
   userDeletedId String?
-  userDeleted   user?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
+  userDeleted   User?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
 }

@@ -6,6 +6,7 @@ const performSeed = async () => {
       username: "Jhonk",
       email: "jhonyelg@gmail.com",
       role: "ADMIN",
+      title: "Manager",
       bio: "I like book",
       imageUrl: "",
       githubLink: "",
@@ -17,7 +18,7 @@ const performSeed = async () => {
       title: "Luanchpad",
       description: "Coded an awesome personal website for NER",
       skills: ["prisma", "typescript"],
-      githuburl: "https://github.com/Jhonyel",
+      githubUrl: "https://github.com/Jhonyel",
       userCreatedId: adminUser.id,
     },
   });
@@ -27,7 +28,7 @@ const performSeed = async () => {
       title: "Homework",
       description: "car creation",
       skills: ["java", "functional Programming"],
-      githuburl: "",
+      githubUrl: "",
       userCreatedId: adminUser.id,
     },
   });
@@ -37,44 +38,50 @@ const performSeed = async () => {
       title: "Homework",
       description: "car creation",
       skills: ["java", "functional Programming"],
-      githuburl: "",
+      githubUrl: "",
       userCreatedId: adminUser.id,
     },
   });
 
-  const Exp1 = await prisma.project.create({
+  const Exp1 = await prisma.experience.create({
     data: {
       id: adminUser.id,
       title: "Nasa",
       description: "rovah",
+      companyName: "NSA",
       location: "Texas",
       imageUrl: [""],
       userCreatedId: adminUser.id,
-      userCreated: adminUser,
+      startDate: new Date(),
+      endDate: new Date(),
     },
   });
 
-  const Exp2 = await prisma.project.create({
+  const Exp2 = await prisma.experience.create({
     data: {
       id: adminUser.id,
       title: "Nasa",
       description: "rovah",
+      companyName: "NSA",
       location: "Texas",
       imageUrl: [""],
       userCreatedId: adminUser.id,
-      userCreated: adminUser,
+      startDate: new Date(),
+      endDate: new Date(),
     },
   });
 
-  const Exp3 = await prisma.project.create({
+  const Exp3 = await prisma.experience.create({
     data: {
       id: adminUser.id,
       title: "Nasa",
       description: "rovah",
+      companyName: "NSA",
       location: "Texas",
       imageUrl: [""],
       userCreatedId: adminUser.id,
-      userCreated: adminUser,
+      startDate: new Date(),
+      endDate: new Date(),
     },
   });
 };
