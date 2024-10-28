@@ -1,3 +1,5 @@
+import ProjectCard from "../ProjectPage/"
+
 const Home = () => {
   return <p>Welcome to the home page!</p>;
 };

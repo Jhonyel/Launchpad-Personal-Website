@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import { requireAuthorization } from "./src/utils/auth.utils";
 import path from "path";
 
-const { PORT } = process.env || 4001;
+const PORT = 4001;
 
 // Instantiate an Express Application
 
