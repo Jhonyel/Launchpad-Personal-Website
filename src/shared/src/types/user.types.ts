@@ -1,6 +1,6 @@
-enum Role {
-  ADMIN,
-  GUEST,
+export enum Role {
+  ADMIN = "ADMIN",
+  GUEST = "GUEST",
 }
 
 export interface User {
@@ -12,5 +12,5 @@ export interface User {
   bio: String;
   imageUrl: String;
   githubLink: String;
-  linkedInLink: String;
+  LinkedInLink: String;
 }

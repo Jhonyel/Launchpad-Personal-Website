@@ -3,7 +3,7 @@ import { Project } from "shared";
 import { projectTransformer } from "../transformers/project.transformer";
 
 export default class ProjectsServices {
-    static async getProjects()
+    static async getProjects():
     Promise<Project[]>  {
         const Project = await prisma.project.findMany({
             where: {
@@ -13,6 +13,6 @@ export default class ProjectsServices {
                 userCreated: true
             }
         });
-        return projects.map(projectTransformer);
+        return Project.map(projectTransformer)
     }
 }
