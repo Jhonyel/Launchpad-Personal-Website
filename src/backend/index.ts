@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { requireAuthorization } from "./src/utils/auth.utils";
 import path from "path";
+import projectsRouter from "./src/routes/projects.routes";
 
 const PORT = 4001;
 
@@ -38,7 +39,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Handle errors
 app.use(errorHandler);
-
+app.use("/projects", projectsRouter);
 // Handle not valid route
 app.use("*", (_req, res) => {
   res.status(404).json({ status: false, message: "Endpoint Not Found" });
