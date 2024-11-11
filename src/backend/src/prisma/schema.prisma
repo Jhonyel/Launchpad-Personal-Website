@@ -13,6 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  GUEST
+}
+
+model User {
+  id           String @id @default(uuid())
+  username     String @unique
+  email        String @unique
+  role         Role
+  title        String
+  bio          String
+  imageUrl     String
+  githubLink   String
+  LinkedInLink String
+
+  createdProjects   Project[]    @relation(name: "userCreated")
+  deletedProjects   Project[]    @relation(name: "userDeleted")
+  createdExperience Experience[] @relation(name: "userCreated")
+  deletedExperience Experience[] @relation(name: "userDeleted")
+}
+
 model Project {
   id            String    @id @default(uuid())
   title         String
@@ -26,28 +48,6 @@ model Project {
   userCreated   User      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
   userDeletedId String?
   userDeleted   User?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
-}
-
-enum Role {
-  ADMIN
-  GUEST
-}
-
-model User {
-  id           String @id @default(uuid())
-  username     String
-  email        String
-  role         Role
-  title        String
-  bio          String
-  imageUrl     String
-  githubLink   String
-  LinkedInLink String
-
-  createdProjects   Project[]    @relation(name: "userCreated")
-  deletedProjects   Project[]    @relation(name: "userDeleted")
-  createdExperience Experience[] @relation(name: "userCreated")
-  deletedExperience Experience[] @relation(name: "userDeleted")
 }
 
 model Experience {

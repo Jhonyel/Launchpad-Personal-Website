@@ -6,5 +6,9 @@ import { userTransformer } from "./user.transformer";
 export const projectTransformer = (
   project: Prisma.ProjectGetPayload<typeof projectQueryArgs>
 ): Project => {
-  return { ...project, creator: userTransformer(project.userCreated) };
+  return {
+    ...project,
+    url: project.githubUrl,
+    creator: userTransformer(project.userCreated),
+  };
 };
