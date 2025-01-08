@@ -1,11 +1,11 @@
 import { User } from "./user.types";
 
 export interface Project {
-  id: String;
-  title: String;
-  description: String;
-  imageUrls: String[];
-  url: String;
-  skills: String[];
+  id: string;
+  title: string;
+  description: string;
+  imageUrls: string[];
+  url: string;
+  skills: string[];
   creator: User;
 }

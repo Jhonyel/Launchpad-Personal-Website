@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const filePath = './src/backend/.env';
-const lineToAdd = 'DATABASE_URL="postgresql://postgres:docker@localhost:5433/nerpm?schema=public"';
+const lineToAdd = 'DATABASE_URL="postgresql://postgres:docker@localhost:8001/nerpm?schema=public"';
 
 fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
