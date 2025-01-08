@@ -24,6 +24,8 @@ export default class ExperiencesController {
     try {
       const { title, description, location, companyName, startDate, endDate } =
         req.body;
+      const files = req.files as Express.Multer.File[];
+      const filePaths = files.map((file) => file.path);
       const user = await getCurrentUser(res);
       const experience = await ExperiencesServices.createExperience(
         title,
@@ -32,7 +34,37 @@ export default class ExperiencesController {
         location,
         startDate,
         endDate,
-        user
+        user,
+        filePaths
+      );
+      return res.json(experience);
+    } catch (error: unknown) {
+      return next(error);
+    }
+  }
+
+  static async updateExperience(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { title, description, location, companyName, startDate, endDate } =
+        req.body;
+      const { experienceId } = req.params;
+      const files = req.files as Express.Multer.File[];
+      const filePaths = files.map((file) => file.path);
+      const user = await getCurrentUser(res);
+      const experience = await ExperiencesServices.updateExperience(
+        title,
+        description,
+        companyName,
+        location,
+        startDate,
+        endDate,
+        user,
+        experienceId,
+        filePaths
       );
       return res.json(experience);
     } catch (error: unknown) {

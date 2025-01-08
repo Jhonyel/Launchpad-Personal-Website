@@ -15,13 +15,16 @@ export default class ProjectsController {
   static async createProject(req: Request, res: Response, next: NextFunction) {
     try {
       const { skills, title, description, url } = req.body;
+      const files = req.files as Express.Multer.File[];
+      const filePaths = files.map((file) => file.path);
       const user = await getCurrentUser(res);
       const project = await ProjectsServices.createProject(
         skills,
         title,
         description,
         url,
-        user
+        user,
+        filePaths
       );
       return res.json(project);
     } catch (error: unknown) {
@@ -33,6 +36,8 @@ export default class ProjectsController {
     try {
       const { skills, title, description, url } = req.body;
       const { projectId } = req.params;
+      const files = req.files as Express.Multer.File[];
+      const filePaths = files.map((file) => file.path);
       const user = await getCurrentUser(res);
       const project = await ProjectsServices.updateProject(
         skills,
@@ -40,7 +45,8 @@ export default class ProjectsController {
         description,
         url,
         user,
-        projectId
+        projectId,
+        filePaths
       );
       return res.json(project);
     } catch (error: unknown) {

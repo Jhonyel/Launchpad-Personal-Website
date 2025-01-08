@@ -27,7 +27,8 @@ export default class ProjectsServices {
     title: string,
     description: string,
     githubUrl: string,
-    user: User
+    user: User,
+    filePaths: string[]
   ): Promise<Project> {
     if (user.role !== "ADMIN")
       throw new AccessDeniedException("Only Admins Can Create Projects");
@@ -43,6 +44,7 @@ export default class ProjectsServices {
             id: user.id,
           },
         },
+        imageUrls: filePaths,
       },
       ...projectQueryArgs,
     });
@@ -56,7 +58,8 @@ export default class ProjectsServices {
     description: string,
     githubUrl: string,
     user: User,
-    projectId: string
+    projectId: string,
+    filePaths: string[]
   ): Promise<Project> {
     const project = await prisma.project.findUnique({
       where: {
@@ -82,6 +85,7 @@ export default class ProjectsServices {
         title,
         description,
         githubUrl,
+        imageUrls: filePaths,
       },
       ...projectQueryArgs,
     });
