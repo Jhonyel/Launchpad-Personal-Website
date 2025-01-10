@@ -162,4 +162,40 @@ describe("Project Tests", () => {
     expect(updatedProject.skills).toStrictEqual(["Typescript"]);
     expect(updatedProject.imageUrls).toStrictEqual([]);
   });
+
+  test("Get all projects works", async () => {
+    const adminUser = await createTestUser(true);
+
+    const project = await ProjectService.createProject(
+      ["Python"],
+      "title",
+      "description",
+      "url",
+      adminUser,
+      []
+    );
+
+    const project2 = await ProjectService.createProject(
+      ["Python"],
+      "title",
+      "description",
+      "url",
+      adminUser,
+      []
+    );
+
+    const project3 = await ProjectService.createProject(
+      ["Python"],
+      "title",
+      "description",
+      "url",
+      adminUser,
+      []
+    );
+
+    const projects = await ProjectService.getProjects();
+
+    expect(projects.length).toBe(3);
+    expect(projects).toStrictEqual([project, project2, project3]);
+  });
 });
