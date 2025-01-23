@@ -12,5 +12,5 @@ export interface User {
   bio: String;
   imageUrl: String;
   githubLink: String;
-  LinkedInLink: String;
+  linkedInLink: String;
 }

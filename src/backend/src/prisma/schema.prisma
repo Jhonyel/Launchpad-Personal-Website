@@ -27,7 +27,7 @@ model User {
   bio          String
   imageUrl     String
   githubLink   String
-  LinkedInLink String
+  linkedInLink String @default("")
 
   createdProjects   Project[]    @relation(name: "userCreated")
   deletedProjects   Project[]    @relation(name: "userDeleted")

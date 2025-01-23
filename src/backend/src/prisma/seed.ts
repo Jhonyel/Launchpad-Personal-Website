@@ -10,7 +10,7 @@ const performSeed = async () => {
       bio: "I like book",
       imageUrl: "",
       githubLink: "",
-      LinkedInLink: "",
+      linkedInLink: "",
     },
   });
   const project1 = await prisma.project.create({
