@@ -19,7 +19,7 @@ const Home = () => {
           title: "",
           bio: "",
           githubLink: "",
-          LinkedInLink: "",
+          linkedInLink: "",
         },
         imageUrls: ["IMG_0261.jpg"],
       }}

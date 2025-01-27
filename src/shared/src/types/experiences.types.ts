@@ -1,11 +1,11 @@
 import { User } from "./user.types";
 
 export interface Experience {
-  id: String;
-  title: String;
-  description: String;
-  companyName: String;
-  location: String;
-  imageUrl: String[];
+  id: string;
+  title: string;
+  description: string;
+  companyName: string;
+  location: string;
+  imageUrls: string[];
   creator: User;
 }

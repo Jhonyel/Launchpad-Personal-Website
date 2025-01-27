@@ -7,7 +7,6 @@ import { upload } from "../utils/file.utils";
 const projectsRouter = express.Router();
 
 projectsRouter.get("/", ProjectsController.getProjects);
-
 projectsRouter.post(
   "/new",
   upload.array("images"),
@@ -18,9 +17,8 @@ projectsRouter.post(
   validateInputs,
   ProjectsController.createProject
 );
-
 projectsRouter.post(
-  "/:projectId/update/",
+  "/:id/update/",
   upload.array("images"),
   nonEmptyString(body("title")),
   nonEmptyString(body("description")),

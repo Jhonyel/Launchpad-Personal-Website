@@ -6,6 +6,7 @@ import { userTransformer } from "../transformers/user.transformer";
 export const getAllUsers = async () => {
   const response = await axios.get<User[]>(urls.USERS, {
     transformResponse: (data) => JSON.parse(data).map(userTransformer),
+    //transformResponse: (data) => JSON.parse(data),
   });
 
   return response;

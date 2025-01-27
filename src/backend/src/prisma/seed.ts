@@ -1,87 +1,54 @@
 import { prisma } from "./prisma";
 
 const performSeed = async () => {
+  // create an admin user in our database
   const adminUser = await prisma.user.create({
     data: {
-      username: "Jhonk",
+      username: "Jhonyel Galvis",
       email: "jhonyelg@gmail.com",
       role: "ADMIN",
-      title: "Manager",
-      bio: "I like book",
+      bio: "2nd year CS student at Northeastern University",
       imageUrl: "",
-      githubLink: "",
-      linkedInLink: "",
+      githubUrl: "https://github.com/Jhonyel",
+      linkedInUrl: "https://www.linkedin.com/in/jhonyel-galvis/",
+      title: "Student",
     },
   });
   const project1 = await prisma.project.create({
     data: {
-      title: "Luanchpad",
-      description: "Coded an awesome personal website for NER",
-      skills: ["prisma", "typescript"],
-      githubUrl: "https://github.com/Jhonyel",
-      userCreatedId: adminUser.id,
+      title: "Launchpad personal website",
+      description: "Created a personal website",
+      skills: ["Prisma", "Typescript"],
+      githubUrl: "https://github.com/Jhonyel/Launchpad-Personal-Website",
+      creatorId: adminUser.id,
     },
   });
-
-  const Project2 = await prisma.project.create({
+  const project2 = await prisma.project.create({
     data: {
-      title: "Homework",
-      description: "car creation",
-      skills: ["java", "functional Programming"],
-      githubUrl: "",
-      userCreatedId: adminUser.id,
+      title: "",
+      description: "",
+      skills: ["React", "Supabase"],
+      githubUrl: "https://github.com/hack-the-us-government",
+      creatorId: adminUser.id,
     },
   });
-
-  const Project3 = await prisma.project.create({
+  const experience1 = await prisma.experience.create({
     data: {
-      title: "Homework",
-      description: "car creation",
-      skills: ["java", "functional Programming"],
-      githubUrl: "",
-      userCreatedId: adminUser.id,
+      title: "Software Developer",
+      description: "Created a personal website",
+      companyName: "Northeastern Electric Racing",
+      location: "Boston",
+      startDate: new Date("2024-09-01"),
+      creatorId: adminUser.id,
     },
   });
-
-  const Exp1 = await prisma.experience.create({
+  const experience2 = await prisma.experience.create({
     data: {
-      id: adminUser.id,
-      title: "Nasa",
-      description: "rovah",
-      companyName: "NSA",
-      location: "Texas",
-      imageUrl: [""],
-      userCreatedId: adminUser.id,
-      startDate: new Date(),
-      endDate: new Date(),
-    },
-  });
-
-  const Exp2 = await prisma.experience.create({
-    data: {
-      id: adminUser.id,
-      title: "Nasa",
-      description: "rovah",
-      companyName: "NSA",
-      location: "Texas",
-      imageUrl: [""],
-      userCreatedId: adminUser.id,
-      startDate: new Date(),
-      endDate: new Date(),
-    },
-  });
-
-  const Exp3 = await prisma.experience.create({
-    data: {
-      id: adminUser.id,
-      title: "Nasa",
-      description: "rovah",
-      companyName: "NSA",
-      location: "Texas",
-      imageUrl: [""],
-      userCreatedId: adminUser.id,
-      startDate: new Date(),
-      endDate: new Date(),
+      title: "Software Developer",
+      description: "",
+      companyName: "",
+      location: "",
+      creatorId: adminUser.id,
     },
   });
 };

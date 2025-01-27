@@ -4,13 +4,13 @@ export enum Role {
 }
 
 export interface User {
-  id: String;
-  email: String;
-  username: String;
+  id: string;
+  username: string;
+  email: string;
   role: Role;
-  title: String;
-  bio: String;
-  imageUrl: String;
-  githubLink: String;
-  linkedInLink: String;
+  title: string;
+  bio: string;
+  imageUrl: string;
+  githubUrl: string;
+  linkedInUrl: string;
 }

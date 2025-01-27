@@ -1,8 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import ExperiencesServices from "../services/experiences.services";
 import { getCurrentUser } from "../utils/auth.utils";
+import { userTransformer } from "../transformers/user.transformer";
 
+// the experiences router uses this experiences controller to set up the end points
 export default class ExperiencesController {
+  // returns a json
   static async getExperiences(
     _req: Request,
     res: Response,
@@ -10,63 +13,47 @@ export default class ExperiencesController {
   ) {
     try {
       const experiences = await ExperiencesServices.getExperiences();
-      return res.json(experiences);
+      return res.json(experiences).send();
     } catch (error: unknown) {
       return next(error);
     }
   }
-
   static async createExperience(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const { title, description, location, companyName, startDate, endDate } =
-        req.body;
-      const files = req.files as Express.Multer.File[];
-      const filePaths = files.map((file) => file.path);
-      const user = await getCurrentUser(res);
-      const experience = await ExperiencesServices.createExperience(
+      const { title, description, companyName, location } = req.body;
+      const creator = await getCurrentUser(res);
+      const createdExperience = await ExperiencesServices.createExperience(
         title,
         description,
         companyName,
         location,
-        startDate,
-        endDate,
-        user,
-        filePaths
+        userTransformer(creator)
       );
-      return res.json(experience);
+      return res.json(createdExperience);
     } catch (error: unknown) {
       return next(error);
     }
   }
-
   static async updateExperience(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const { title, description, location, companyName, startDate, endDate } =
-        req.body;
-      const { experienceId } = req.params;
-      const files = req.files as Express.Multer.File[];
-      const filePaths = files.map((file) => file.path);
-      const user = await getCurrentUser(res);
-      const experience = await ExperiencesServices.updateExperience(
+      const { title, description, companyName, location } = req.body;
+      const updater = await getCurrentUser(res);
+      const updatedExperience = await ExperiencesServices.createExperience(
         title,
         description,
         companyName,
         location,
-        startDate,
-        endDate,
-        user,
-        experienceId,
-        filePaths
+        userTransformer(updater)
       );
-      return res.json(experience);
+      return res.json(updatedExperience);
     } catch (error: unknown) {
       return next(error);
     }

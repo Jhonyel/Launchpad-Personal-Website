@@ -1,17 +1,74 @@
-import { Request, Response, NextFunction } from "express";
-import userServices from "../services/user.services";
+import { NextFunction, Request, Response } from "express";
+import UserServices from "../services/user.services";
 import { AccessDeniedException } from "../utils/error.utils";
 
-export default class userController {
+export default class UserController {
   static async getUsers(_req: Request, res: Response, next: NextFunction) {
     try {
-      const users = await userServices.getUsers();
+      const users = await UserServices.getUsers();
       return res.json(users);
     } catch (error: unknown) {
       return next(error);
     }
   }
+  static async createUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {
+        username,
+        email,
+        role,
+        title,
+        bio,
+        imageUrl,
+        githubUrl,
+        linkedInUrl,
+      } = req.body;
 
+      const createdUser = await UserServices.createUser(
+        username,
+        email,
+        role,
+        title,
+        bio,
+        imageUrl,
+        githubUrl,
+        linkedInUrl
+      );
+      return res.json(createdUser);
+    } catch (error: unknown) {
+      return next(error);
+    }
+  }
+  static async updateUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {
+        username,
+        email,
+        role,
+        title,
+        bio,
+        imageUrl,
+        githubUrl,
+        linkedInUrl,
+        userId,
+      } = req.body;
+
+      const updatedUser = await UserServices.updateUser(
+        username,
+        email,
+        role,
+        title,
+        bio,
+        imageUrl,
+        githubUrl,
+        linkedInUrl,
+        userId
+      );
+      return res.json(updatedUser);
+    } catch (error: unknown) {
+      return next(error);
+    }
+  }
   static async login(req: Request, res: Response, next: NextFunction) {
     try {
       if (process.env.NODE_ENV === "production")
@@ -26,7 +83,7 @@ export default class userController {
         );
       }
 
-      const user = await userServices.login(userId);
+      const user = await UserServices.login(userId);
 
       res.status(200).json(user);
     } catch (error: unknown) {

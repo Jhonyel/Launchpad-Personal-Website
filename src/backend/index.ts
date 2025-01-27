@@ -6,6 +6,7 @@ import { requireAuthorization } from "./src/utils/auth.utils";
 import path from "path";
 import projectsRouter from "./src/routes/projects.routes";
 import experiencesRouter from "./src/routes/experiences.routes";
+import userRouter from "./src/routes/user.routes";
 
 const PORT = 4001;
 
@@ -36,6 +37,9 @@ app.use("*", (_req, res, next) => {
 });
 
 // Assign Routes
+app.use("/projects", projectsRouter);
+app.use("/users", userRouter);
+app.use("/experiences", experiencesRouter);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Handle errors

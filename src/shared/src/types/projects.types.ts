@@ -5,7 +5,7 @@ export interface Project {
   title: string;
   description: string;
   imageUrls: string[];
-  url: string;
   skills: string[];
+  githubUrl: string;
   creator: User;
 }

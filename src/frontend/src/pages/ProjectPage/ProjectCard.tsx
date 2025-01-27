@@ -17,7 +17,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia component="img" height="140" image="" alt="project image">
-          <img src={urls.IMAGES(project.imageUrls[0])} />
+          <img src={urls.IMAGES(project.imageUrls[0])}></img>
         </CardMedia>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

@@ -13,56 +13,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Project {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  imageUrls   String[]
+  skills      String[]
+  githubUrl   String
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime?
+  creatorId   String    @map("creatorId")
+  creator     User      @relation(name: "creator", fields: [creatorId], references: [id])
+  deletorId   String?   @map("deletorId")
+  deletor     User?     @relation(name: "deletor", fields: [deletorId], references: [id])
+}
+
 enum Role {
   ADMIN
   GUEST
 }
 
 model User {
-  id           String @id @default(uuid())
-  username     String
-  email        String
-  role         Role   @default(GUEST)
-  title        String
-  bio          String
-  imageUrl     String
-  githubLink   String
-  linkedInLink String @default("")
-
-  createdProjects   Project[]    @relation(name: "userCreated")
-  deletedProjects   Project[]    @relation(name: "userDeleted")
-  createdExperience Experience[] @relation(name: "userCreated")
-  deletedExperience Experience[] @relation(name: "userDeleted")
-}
-
-model Project {
-  id            String    @id @default(uuid())
-  title         String
-  description   String
-  imageUrls     String[]
-  skills        String[]
-  githubUrl     String
-  dateCreated   DateTime  @default(now())
-  dateDeleted   DateTime?
-  userCreatedId String
-  userCreated   User      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
-  userDeletedId String?
-  userDeleted   User?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
+  id                 String       @id @default(uuid())
+  username           String
+  email              String
+  role               Role
+  title              String
+  bio                String
+  imageUrl           String
+  githubUrl          String
+  linkedInUrl        String
+  createdProjects    Project[]    @relation(name: "creator")
+  deletedProjects    Project[]    @relation(name: "deletor")
+  createdExperiences Experience[] @relation(name: "creator")
+  deletedExperiences Experience[] @relation(name: "deletor")
 }
 
 model Experience {
-  id            String    @id @default(uuid())
-  title         String
-  description   String
-  companyName   String
-  location      String
-  imageUrl      String[]
-  startDate     DateTime
-  endDate       DateTime
-  dateCreated   DateTime  @default(now())
-  dateDeleted   DateTime?
-  userCreatedId String
-  userCreated   User      @relation(name: "userCreated", fields: [userCreatedId], references: [id])
-  userDeletedId String?
-  userDeleted   User?     @relation(name: "userDeleted", fields: [userDeletedId], references: [id])
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  companyName String
+  location    String
+  imageUrls   String[]
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime?
+  creatorId   String    @map("creatorId")
+  creator     User      @relation(name: "creator", fields: [creatorId], references: [id])
+  deletorId   String?   @map("deletorId")
+  deletor     User?     @relation(name: "deletor", fields: [deletorId], references: [id])
 }

@@ -6,5 +6,8 @@ import { userTransformer } from "./user.transformer";
 export const experienceTransformer = (
   experience: Prisma.ExperienceGetPayload<typeof experienceQueryArgs>
 ): Experience => {
-  return { ...experience, creator: userTransformer(experience.userCreated) };
+  return {
+    ...experience,
+    creator: userTransformer(experience.creator),
+  };
 };
