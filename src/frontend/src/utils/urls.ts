@@ -8,10 +8,22 @@ const LOGIN = USERS + "auth/login";
 /* Images */
 const IMAGES = (imagePath: string) => BASE_URL + "/" + imagePath;
 
-export const urls = {
+// projects
+export const PROJECTS = BASE_URL + "/projects";
+export const CREATE_PROJECT = PROJECTS + "/new";
+export const EDIT_PROJECT = (id: string) => `${PROJECTS}/${id}/edit`;
 
+export const EXPERIENCES = BASE_URL + "/experiences/";
+export const CREATE_EXPERIENCE = EXPERIENCES + "new";
+
+export const urls = {
   USERS,
   LOGIN,
 
+  PROJECTS,
+  CREATE_PROJECT,
+  EDIT_PROJECT,
+
+  EXPERIENCES,
   IMAGES,
 };

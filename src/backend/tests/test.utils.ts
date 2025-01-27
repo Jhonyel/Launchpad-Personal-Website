@@ -6,17 +6,18 @@ export const clearDatabase = async () => {
   await prisma.experience.deleteMany();
   await prisma.user.deleteMany();
 };
+
 export const createTestUser = async (isAdmin = true): Promise<User> => {
   const user = await prisma.user.create({
     data: {
-      username: "Jhonk",
+      username: "Jhonyel Galvis",
       email: "jhonyelg@gmail.com",
       role: isAdmin ? "ADMIN" : "GUEST",
-      title: "Manager",
-      bio: "I like book",
+      bio: "i love picking pickles",
       imageUrl: "",
-      githubLink: "",
-      LinkedInLink: "",
+      githubUrl: "https://github.com/Jhonyel",
+      linkedInUrl: "https://www.linkedin.com/in/jhonyel-galvis/",
+      title: "chief pickle picker",
     },
   });
   return user;

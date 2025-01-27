@@ -5,9 +5,8 @@ import cookieParser from "cookie-parser";
 import { requireAuthorization } from "./src/utils/auth.utils";
 import path from "path";
 import projectsRouter from "./src/routes/projects.routes";
-import experiencesRouter from "./src/routes/experiences.routes";
 import userRouter from "./src/routes/user.routes";
-
+import experiencesRouter from "./src/routes/experiences.routes";
 const PORT = 4001;
 
 // Instantiate an Express Application
@@ -37,15 +36,14 @@ app.use("*", (_req, res, next) => {
 });
 
 // Assign Routes
-app.use("/projects", projectsRouter);
-app.use("/users", userRouter);
-app.use("/experiences", experiencesRouter);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Handle errors
 app.use(errorHandler);
 app.use("/projects", projectsRouter);
+app.use("/users", userRouter);
 app.use("/experiences", experiencesRouter);
+
 // Handle not valid route
 app.use("*", (_req, res) => {
   res.status(404).json({ status: false, message: "Endpoint Not Found" });

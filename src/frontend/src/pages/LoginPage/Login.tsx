@@ -3,19 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../hooks/auth.hooks';
-import { routes } from '../../utils/routes';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import LoginForm from './LoginForm';
-import { useQuery } from '../../hooks/utils.hooks';
+import { FormEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../../hooks/auth.hooks";
+import { routes } from "../../utils/routes";
+import LoadingIndicator from "../../components/LoadingIndicator";
+import LoginForm from "./LoginForm";
+import { useQuery } from "../../hooks/utils.hooks";
 
 /**
  * Page for unauthenticated users to do login.
  */
 const Login = () => {
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
   const history = useHistory();
   const query = useQuery();
   const auth = useAuth();
@@ -28,8 +28,8 @@ const Login = () => {
    * @returns the path, with args, redirected to
    */
   const redirectQueryArgsToPath = (queryArgs: URLSearchParams): string => {
-    const pageName: string = queryArgs.get('page')!;
-    queryArgs.delete('page');
+    const pageName: string = queryArgs.get("page")!;
+    queryArgs.delete("page");
 
     const intermediatePathValues: string[] = [];
     for (let valueIdx = 1; queryArgs.has(`value${valueIdx}`); valueIdx++) {
@@ -38,12 +38,12 @@ const Login = () => {
       queryArgs.delete(`value${valueIdx}`);
     }
 
-    const pathString: string = `/${pageName}${intermediatePathValues.join('')}`;
+    const pathString: string = `/${pageName}${intermediatePathValues.join("")}`;
     return `${pathString}?${queryArgs.toString()}`;
   };
 
   const redirectAfterLogin = () => {
-    if (!query.has('page')) {
+    if (!query.has("page")) {
       history.push(routes.HOME);
     } else {
       history.push(redirectQueryArgsToPath(query));
@@ -57,12 +57,7 @@ const Login = () => {
     redirectAfterLogin();
   };
 
-  return (
-    <LoginForm
-      setUser={setUserId}
-      formSubmit={onLoginFormSubmit}
-    />
-  );
+  return <LoginForm setUser={setUserId} formSubmit={onLoginFormSubmit} />;
 };
 
 export default Login;
