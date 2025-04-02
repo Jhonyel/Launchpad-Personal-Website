@@ -1,4 +1,3 @@
-import { Role } from "shared";
 import ProjectCard from "../ProjectPage/ProjectCard";
 import { useGetAllProjects } from "../../hooks/projects.hooks";
 import LoadingIndicator from "../../components/LoadingIndicator";
