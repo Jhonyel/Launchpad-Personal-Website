@@ -28,6 +28,8 @@
   "author": "Northeastern Electric Racing",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
     "concurrently": "^8.2.2"
   },
   "jest": {
