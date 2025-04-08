@@ -41,5 +41,9 @@
     "transformIgnorePatterns": [
       "node_modules/(?!variables/.*)"
     ]
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

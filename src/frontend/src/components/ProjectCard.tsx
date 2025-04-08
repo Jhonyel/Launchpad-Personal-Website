@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Project } from "shared";
-import { urls } from "../../utils/urls";
+import { urls } from "../utils/urls";
 
 interface ProjectCardProps {
   project: Project;
