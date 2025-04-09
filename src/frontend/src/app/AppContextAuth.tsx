@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 
 export const AuthContext = createContext<Auth | undefined>(undefined);
 
-const AppContextAuth = ({children}: PropsWithChildren) => {
+const AppContextAuth = ({ children }: PropsWithChildren) => {
   const auth = useProvideAuth();
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
