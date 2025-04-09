@@ -1,18 +1,7 @@
-import ProjectCard from "../ProjectPage/ProjectCard";
-import { useGetAllProjects } from "../../hooks/projects.hooks";
-import LoadingIndicator from "../../components/LoadingIndicator";
-import ErrorPage from "../../components/ErrorPage";
+import { Typography } from "@mui/material";
 
 const Home = () => {
-  const { data, isLoading, isError, error } = useGetAllProjects();
-  if (isError) {
-    console.error(error);
-    return <ErrorPage error={error} />;
-  }
-  if (isLoading || !data) {
-    return <LoadingIndicator />;
-  }
-  return <ProjectCard project={data[0]} />;
+  return <Typography>Welcome to my personal website!</Typography>;
 };
 
 export default Home;

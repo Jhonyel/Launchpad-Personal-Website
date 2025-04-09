@@ -74,9 +74,7 @@ const AppPublic: React.FC = () => {
       <Route path={routes.LOGIN}>
         <Login />
       </Route>
-      <Route path={routes.PROJECTS}>
-        <ProjectsPage />
-      </Route>
+
       <Route path="*" render={render} />
     </Switch>
   );
