@@ -5,34 +5,37 @@ import NERFormModal from "../../components/FormModal";
 import { useCreateProject } from "../../hooks/projects.hooks";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import {
+  Button,
   FormControl,
   FormLabel,
   Grid,
   IconButton,
   TextField,
 } from "@mui/material";
-import { Delete } from "@mui/icons-material";
+import { Delete, FileUpload } from "@mui/icons-material";
 import NERSuccessButton from "../../components/NERSuccessButton";
 
 export interface ProjectFormInput {
   title: string;
   description: string;
+  githubUrl: string;
   images: {
     file: File;
   }[];
   skills: {
     name: string;
   }[];
-  githubUrl: string;
 }
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
+const schema = yup.object<ProjectFormInput>().shape({
+  title: yup.string().required("Title is required"),
   description: yup.string().required(),
+  githubUrl: yup.string().required(),
   skills: yup
     .array()
-    .of(yup.object().shape({ name: yup.string().required() }))
-    .required(),
+    .required()
+    .of(yup.object().shape({ name: yup.string().required() })),
+  images: yup.array().required(),
 });
 
 const ProjectForm = ({
@@ -43,9 +46,11 @@ const ProjectForm = ({
   onHide: () => void;
 }) => {
   const { mutateAsync, isLoading } = useCreateProject();
+
   const defaultValues = {
     title: "",
     description: "",
+    githubUrl: "",
     skills: [],
     images: [],
   };
@@ -54,9 +59,7 @@ const ProjectForm = ({
     try {
       await mutateAsync(data);
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -80,6 +83,15 @@ const ProjectForm = ({
     name: "skills",
   });
 
+  const {
+    append: appendImage,
+    remove: removeImage,
+    fields: images,
+  } = useFieldArray({
+    control,
+    name: "images",
+  });
+
   if (isLoading) {
     return <LoadingIndicator />;
   }
@@ -92,27 +104,30 @@ const ProjectForm = ({
       title={"Create Project"}
       onHide={onHide}
       onFormSubmit={onSubmit}
+      formId="Create Project Form"
     >
-      <Grid item xs={12} lg={8}>
-        <FormControl fullWidth>
-          <FormLabel title="Title" />
-          <Controller
-            control={control}
-            name="title"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <TextField
-                  placeholder="Enter a Title"
-                  value={value}
-                  onChange={(e) => {
-                    onChange(e.target.value);
-                  }}
-                  error={!!errors.title}
-                />
-              );
-            }}
-          />
-        </FormControl>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={8}>
+          <FormControl fullWidth>
+            <FormLabel title="Title" />
+            <Controller
+              control={control}
+              name="title"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <TextField
+                    placeholder="Enter a Title"
+                    value={value}
+                    onChange={(e) => {
+                      onChange(e.target.value);
+                    }}
+                    error={!!errors.title}
+                  />
+                );
+              }}
+            />
+          </FormControl>
+        </Grid>
         <Grid item xs={12} lg={8}>
           <FormControl fullWidth>
             <FormLabel title="Description" />
@@ -136,11 +151,33 @@ const ProjectForm = ({
         </Grid>
         <Grid item xs={12} lg={8}>
           <FormControl fullWidth>
-            <FormLabel title="SKills" />
+            <FormLabel title="Github Url" />
+            <Controller
+              control={control}
+              name="githubUrl"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <TextField
+                    placeholder="Enter a Github Url"
+                    value={value}
+                    onChange={(e) => {
+                      onChange(e.target.value);
+                    }}
+                    error={!!errors.githubUrl}
+                  />
+                );
+              }}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} lg={8}>
+          <FormControl fullWidth>
+            <FormLabel title="Skills" />
             <Grid container>
               {skills.map((skill, i) => {
                 return (
                   <Grid
+                    key={skill.id}
                     item
                     sx={{
                       display: "flex",
@@ -150,11 +187,9 @@ const ProjectForm = ({
                   >
                     <TextField
                       placeholder="Enter a skill"
-                      value={skill.name}
-                      {...register(`skills.${i}`)}
+                      {...register(`skills.${i}.name`)}
                     />
                     <IconButton onClick={() => removeSkills(i)}>
-                      {" "}
                       <Delete />
                     </IconButton>
                   </Grid>
@@ -170,6 +205,50 @@ const ProjectForm = ({
               </NERSuccessButton>
             </Grid>
           </FormControl>
+        </Grid>
+        <Grid item xs={12} lg={8}>
+          <FormLabel title="Images" />
+          <Grid container>
+            {images.map((image, index) => {
+              return (
+                <Grid
+                  key={image.id}
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    verticalAlign: "middle",
+                  }}
+                >
+                  <h4>{image.file.name}</h4>
+                  <IconButton onClick={() => removeImage(index)}>
+                    <Delete />
+                  </IconButton>
+                </Grid>
+              );
+            })}
+            <Button
+              variant="contained"
+              color="success"
+              startIcon={<FileUpload />}
+              component="label"
+            >
+              Upload
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                hidden
+                onChange={(e) => {
+                  if (e.target.files) {
+                    [...e.target.files].forEach((file) => {
+                      appendImage({ file });
+                    });
+                  }
+                }}
+              />
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </NERFormModal>

@@ -33,9 +33,10 @@ export default class ProjectsServices {
     if (creatingUser.role !== "ADMIN") {
       throw new AccessDeniedException("only admins can create projects");
     }
+
     const project = await prisma.project.create({
       data: {
-        skills,
+        skills: skills,
         title,
         description,
         githubUrl,
@@ -81,7 +82,7 @@ export default class ProjectsServices {
         id: projectId,
       },
       data: {
-        skills,
+        skills: skills,
         title,
         description,
         githubUrl,

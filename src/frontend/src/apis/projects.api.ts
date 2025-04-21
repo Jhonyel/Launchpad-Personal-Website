@@ -10,7 +10,17 @@ export const getProjects = async () => {
 };
 
 export const createProject = async (projectData: ProjectFormInput) => {
-  const response = await axios.post<Project>(urls.CREATE_PROJECT, projectData);
+  const formData = new FormData();
+  formData.append("description", projectData.description);
+  formData.append("title", projectData.title);
+  projectData.images.forEach((image) => formData.append("images", image.file));
+  formData.append("githubUrl", projectData.githubUrl);
+  formData.append(
+    "skills",
+    JSON.stringify(projectData.skills.map((skill) => skill.name))
+  );
+
+  const response = await axios.post<Project>(urls.CREATE_PROJECT, formData);
 
   return response.data;
 };

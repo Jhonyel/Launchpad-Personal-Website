@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import ProjectsServices from "../services/projects.services";
 import { getCurrentUser } from "../utils/auth.utils";
-import { userTransformer } from "../transformers/user.transformer";
 
 export default class ProjectsController {
   static async getProjects(_req: Request, res: Response, next: NextFunction) {
@@ -17,23 +16,41 @@ export default class ProjectsController {
   }
   static async createProject(req: Request, res: Response, next: NextFunction) {
     try {
-      const { skills, title, description, url } = req.body;
-      const files = req.files as Express.Multer.File[]; // multer: express's file namespace
+      const { skills, title, description, githubUrl } = req.body;
+      const files = req.files as Express.Multer.File[];
+
+      // ✅ Convert stringified JSON to actual array
+      let parsedSkills: string[];
+      try {
+        parsedSkills = JSON.parse(skills);
+        if (
+          !Array.isArray(parsedSkills) ||
+          !parsedSkills.every((s) => typeof s === "string")
+        ) {
+          throw new Error("Skills must be an array of strings");
+        }
+      } catch (err) {
+        return res.status(400).json({ error: "Invalid format for skills" });
+      }
+
       const filePaths = files.map((file) => file.path);
       const creator = await getCurrentUser(res);
+
       const createdProject = await ProjectsServices.createProject(
-        skills,
+        parsedSkills, // ✅ send proper array to service
         title,
         description,
         creator,
-        url,
+        githubUrl,
         filePaths
       );
+
       return res.json(createdProject);
     } catch (error: unknown) {
       return next(error);
     }
   }
+
   static async updateProject(req: Request, res: Response, next: NextFunction) {
     try {
       const { skills, title, description, url } = req.body;
