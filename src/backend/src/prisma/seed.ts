@@ -8,7 +8,7 @@ const performSeed = async () => {
       email: "jhonyelg@gmail.com",
       role: "ADMIN",
       bio: "2nd year CS student at Northeastern University",
-      imageUrl: "",
+      imageUrl: "IMG_0261.jpg",
       githubUrl: "https://github.com/Jhonyel",
       linkedInUrl: "https://www.linkedin.com/in/jhonyel-galvis/",
       title: "Student",
