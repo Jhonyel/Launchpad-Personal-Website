@@ -11,7 +11,7 @@ const IMAGES = (imagePath: string) => BASE_URL + "/" + imagePath;
 // projects
 export const PROJECTS = BASE_URL + "/projects";
 export const CREATE_PROJECT = PROJECTS + "/new";
-export const EDIT_PROJECT = (id: string) => `${PROJECTS}/${id}/edit`;
+export const EDIT_PROJECT = (id: string) => `${PROJECTS}/${id}/update`;
 
 export const EXPERIENCES = BASE_URL + "/experiences/";
 export const CREATE_EXPERIENCE = EXPERIENCES + "new";

@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
 import NERFormModal from "../../components/FormModal";
-import { useCreateProject } from "../../hooks/projects.hooks";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import {
   Button,
@@ -14,6 +13,7 @@ import {
 } from "@mui/material";
 import { Delete, FileUpload } from "@mui/icons-material";
 import NERSuccessButton from "../../components/NERSuccessButton";
+import { Project } from "shared";
 
 export interface ProjectFormInput {
   title: string;
@@ -41,23 +41,20 @@ const schema = yup.object<ProjectFormInput>().shape({
 const ProjectForm = ({
   open,
   onHide,
+  mutateAsync,
+  defaultValues,
+  isLoading,
 }: {
   open: boolean;
   onHide: () => void;
+  mutateAsync: (data: ProjectFormInput) => Promise<Project>;
+  defaultValues: ProjectFormInput;
+  isLoading: boolean;
 }) => {
-  const { mutateAsync, isLoading } = useCreateProject();
-
-  const defaultValues = {
-    title: "",
-    description: "",
-    githubUrl: "",
-    skills: [],
-    images: [],
-  };
-
   const onSubmit = async (data: ProjectFormInput) => {
     try {
       await mutateAsync(data);
+      onHide();
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }

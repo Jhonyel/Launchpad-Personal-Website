@@ -4,8 +4,8 @@ import { useGetAllProjects } from "../../hooks/projects.hooks";
 import { Container, Grid } from "@mui/material";
 import { useState } from "react";
 import NERSuccessButton from "../../components/NERSuccessButton";
-import ProjectForm from "./ProjectForm";
 import ProjectCard from "../../components/ProjectCard";
+import { ProjectCreateForm } from "./ProjectCreateForm";
 
 const ProjectsPage: React.FC = () => {
   const { data: projects, isLoading, isError, error } = useGetAllProjects();
@@ -21,11 +21,11 @@ const ProjectsPage: React.FC = () => {
 
   return (
     <Container>
-      <Grid container columnSpacing={20} mt={2} mb={2}>
+      <Grid container columnSpacing={20} rowSpacing={2} mt={2} mb={2}>
         {projects.map((project) => {
           return (
             <Grid item xs={4} key={project.id}>
-              <ProjectCard project={project} />
+              <ProjectCard project={project} sx={{}} />
             </Grid>
           );
         })}
@@ -34,7 +34,7 @@ const ProjectsPage: React.FC = () => {
       <NERSuccessButton onClick={() => setCreateFormOpen(true)}>
         Add Project
       </NERSuccessButton>
-      <ProjectForm
+      <ProjectCreateForm
         open={createFormOpen}
         onHide={() => setCreateFormOpen(false)}
       />
