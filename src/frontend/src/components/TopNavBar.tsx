@@ -129,7 +129,14 @@ const TopNavBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Avatar alt="Profile Pic" src={urls.IMAGES(currentUser.imageUrl)} />
+            <Avatar
+              alt="Profile Pic"
+              src={urls.IMAGES(currentUser.imageUrl)}
+              style={{
+                transform: "scale(1.5)",
+                transition: "transform 0.3s ease-in-out", // Optional: smooth transition when hovering
+              }}
+            />
           </Box>
         </Toolbar>
       </Container>
