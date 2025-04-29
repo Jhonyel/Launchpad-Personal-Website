@@ -12,6 +12,7 @@ import Home from "../pages/HomePage/Home";
 import TopNavBar from "../components/TopNavBar";
 import Footer from "../components/Footer";
 import ProjectsPage from "../pages/ProjectPage/ProjectsPage";
+import ExperiencesPage from "../pages/ExperiencePage/ExperiencePage";
 
 const AppAuthenticated = () => {
   return (
@@ -22,6 +23,7 @@ const AppAuthenticated = () => {
           <Switch>
             <Route path={routes.HOME} component={Home} />
             <Route path={routes.PROJECTS} component={ProjectsPage} />
+            <Route path={routes.EXPERIENCES} component={ExperiencesPage} />
             <Route path="*" component={PageNotFound} />
           </Switch>
           <Footer />

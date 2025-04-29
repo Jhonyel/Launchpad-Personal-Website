@@ -14,6 +14,19 @@ const performSeed = async () => {
       title: "Student",
     },
   });
+  // create a guest user in our database
+  const guestUser = await prisma.user.create({
+    data: {
+      username: "Guest",
+      email: "",
+      role: "GUEST",
+      bio: "guest user to view website",
+      imageUrl: "",
+      githubUrl: "",
+      linkedInUrl: "",
+      title: "Viewer",
+    },
+  });
   const project1 = await prisma.project.create({
     data: {
       title: "Launchpad personal website",

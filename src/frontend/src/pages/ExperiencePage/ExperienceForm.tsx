@@ -1,8 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Experience } from "shared";
 import * as yup from "yup";
-import NERFormModal from "../../components/FormModal";
 import LoadingIndicator from "../../components/LoadingIndicator";
+import NERFormModal from "../../components/FormModal";
 import {
   Button,
   FormControl,
@@ -12,33 +13,26 @@ import {
   TextField,
 } from "@mui/material";
 import { Delete, FileUpload } from "@mui/icons-material";
-import NERSuccessButton from "../../components/NERSuccessButton";
-import { Project } from "shared";
 
-export interface ProjectFormInput {
+export interface ExperienceFormInput {
   title: string;
   description: string;
-  githubUrl: string;
+  companyName: string;
+  location: string;
   images: {
     file: File;
   }[];
-  skills: {
-    name: string;
-  }[];
 }
 
-const schema = yup.object<ProjectFormInput>().shape({
+const schema = yup.object<ExperienceFormInput>().shape({
   title: yup.string().required("Title is required"),
-  description: yup.string().required("Description is required"),
-  githubUrl: yup.string().required("Github url is required"),
-  skills: yup
-    .array()
-    .required()
-    .of(yup.object().shape({ name: yup.string().required() })),
+  description: yup.string().required("description is required"),
+  companyName: yup.string().required("Company name is required"),
+  location: yup.string().required("Location is required"),
   images: yup.array().required(),
 });
 
-const ProjectForm = ({
+const ExperienceForm = ({
   open,
   onHide,
   mutateAsync,
@@ -47,11 +41,11 @@ const ProjectForm = ({
 }: {
   open: boolean;
   onHide: () => void;
-  mutateAsync: (data: ProjectFormInput) => Promise<Project>;
-  defaultValues: ProjectFormInput;
+  mutateAsync: (data: ExperienceFormInput) => Promise<Experience>;
+  defaultValues: ExperienceFormInput;
   isLoading: boolean;
 }) => {
-  const onSubmit = async (data: ProjectFormInput) => {
+  const onSubmit = async (data: ExperienceFormInput) => {
     try {
       await mutateAsync(data);
       onHide();
@@ -65,19 +59,9 @@ const ProjectForm = ({
     handleSubmit,
     formState: { errors },
     reset,
-    register,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues,
-  });
-
-  const {
-    append: appendSkills,
-    remove: removeSkills,
-    fields: skills,
-  } = useFieldArray({
-    control,
-    name: "skills",
   });
 
   const {
@@ -98,10 +82,10 @@ const ProjectForm = ({
       handleUseFormSubmit={handleSubmit}
       reset={reset}
       open={open}
-      title={"Create Project"}
+      title={"Create Experience"}
       onHide={onHide}
       onFormSubmit={onSubmit}
-      formId="Create Project Form"
+      formId="Create Experience Form"
     >
       <Grid container spacing={2}>
         <Grid item xs={12} lg={8}>
@@ -148,19 +132,19 @@ const ProjectForm = ({
         </Grid>
         <Grid item xs={12} lg={8}>
           <FormControl fullWidth>
-            <FormLabel title="Github Url" />
+            <FormLabel title="Company Name" />
             <Controller
               control={control}
-              name="githubUrl"
+              name="companyName"
               render={({ field: { value, onChange } }) => {
                 return (
                   <TextField
-                    placeholder="Enter a Github Url"
+                    placeholder="Enter a Company Name"
                     value={value}
                     onChange={(e) => {
                       onChange(e.target.value);
                     }}
-                    error={!!errors.githubUrl}
+                    error={!!errors.companyName}
                   />
                 );
               }}
@@ -169,38 +153,23 @@ const ProjectForm = ({
         </Grid>
         <Grid item xs={12} lg={8}>
           <FormControl fullWidth>
-            <FormLabel title="Skills" />
-            <Grid container>
-              {skills.map((skill, i) => {
+            <FormLabel title="Location" />
+            <Controller
+              control={control}
+              name="location"
+              render={({ field: { value, onChange } }) => {
                 return (
-                  <Grid
-                    key={skill.id}
-                    item
-                    sx={{
-                      display: "flex",
-                      alignContent: "center",
-                      justifyContent: "center",
+                  <TextField
+                    placeholder="Enter a Location"
+                    value={value}
+                    onChange={(e) => {
+                      onChange(e.target.value);
                     }}
-                  >
-                    <TextField
-                      placeholder="Enter a skill"
-                      {...register(`skills.${i}.name`)}
-                    />
-                    <IconButton onClick={() => removeSkills(i)}>
-                      <Delete />
-                    </IconButton>
-                  </Grid>
+                    error={!!errors.location}
+                  />
                 );
-              })}
-              <NERSuccessButton
-                title="Add Skill"
-                onClick={() => {
-                  appendSkills({ name: "" });
-                }}
-              >
-                Add Skill
-              </NERSuccessButton>
-            </Grid>
+              }}
+            />
           </FormControl>
         </Grid>
         <Grid item xs={12} lg={8}>
@@ -252,4 +221,4 @@ const ProjectForm = ({
   );
 };
 
-export default ProjectForm;
+export default ExperienceForm;

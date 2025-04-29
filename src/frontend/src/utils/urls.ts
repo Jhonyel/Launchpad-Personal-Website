@@ -15,6 +15,7 @@ export const EDIT_PROJECT = (id: string) => `${PROJECTS}/${id}/update`;
 
 export const EXPERIENCES = BASE_URL + "/experiences/";
 export const CREATE_EXPERIENCE = EXPERIENCES + "new";
+export const EDIT_EXPERIENCE = (id: string) => `${EXPERIENCES}/${id}/update`;
 
 export const urls = {
   USERS,
@@ -25,5 +26,7 @@ export const urls = {
   EDIT_PROJECT,
 
   EXPERIENCES,
+  CREATE_EXPERIENCE,
+  EDIT_EXPERIENCE,
   IMAGES,
 };

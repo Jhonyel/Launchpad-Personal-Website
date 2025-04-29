@@ -13,7 +13,7 @@ export default class ExperiencesController {
   ) {
     try {
       const experiences = await ExperiencesServices.getExperiences();
-      return res.json(experiences).send();
+      return res.json(experiences);
     } catch (error: unknown) {
       return next(error);
     }
