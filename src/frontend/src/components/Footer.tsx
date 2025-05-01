@@ -6,14 +6,14 @@ const Footer = () => {
   const currentUser = useCurrentUser();
 
   return (
-    <Box display={"flex"} justifyContent={"space-between"} mt={'50px'}>
+    <Box display={"flex"} justifyContent={"space-between"} mt={"50px"}>
       <Typography variant="caption" color={"white"} flexGrow={1}>
         © Northeastern Electric Racing, 2024
       </Typography>
       <Box display={"flex"}>
         <a
           style={{ color: "white", marginRight: "10px" }}
-          href={currentUser.githubLink}
+          href={currentUser.githubUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -21,7 +21,7 @@ const Footer = () => {
         </a>
         <a
           style={{ color: "white", marginRight: "10px" }}
-          href={currentUser.linkedInLink}
+          href={currentUser.linkedInUrl}
           target="_blank"
           rel="noreferrer"
         >

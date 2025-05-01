@@ -15,9 +15,9 @@ export const experiencePreviewTransformer = (
 ): ExperiencePreview => {
   return {
     ...experience,
-    createdAt: new Date(experience.createdAt),
-    updatedAt: new Date(experience.updatedAt),
-    startDate: new Date(experience.startDate),
-    endDate: experience.endDate ? new Date(experience.endDate) : undefined,
+    //createdAt: new Date(experience.createdAt),
+    //updatedAt: new Date(experience.updatedAt),
+    //startDate: new Date(experience.startDate),
+    //endDate: experience.endDate ? new Date(experience.endDate) : undefined,
   };
 };

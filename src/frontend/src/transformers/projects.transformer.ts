@@ -13,7 +13,7 @@ export const projectPreviewTransformer = (
 ): ProjectPreview => {
   return {
     ...project,
-    createdAt: new Date(project.createdAt),
-    updatedAt: new Date(project.updatedAt),
+    //createdAt: new Date(project.createdAt),
+    //updatedAt: new Date(project.updatedAt),
   };
 };
